@@ -167,6 +167,7 @@ function generateStyle(elem) {
   let style = {};
   if (elem.classList.value.includes("toast-container")) {
     style = {
+      color:'#242424',
       position: "absolute",
       bottom: "2rem",
       right: "2rem",
