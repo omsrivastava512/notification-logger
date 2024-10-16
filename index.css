@@ -16,6 +16,7 @@ a {
   color: #646cff;
   text-decoration: inherit;
 }
+
 a:hover {
   color: #535bf2;
 }
@@ -33,8 +34,11 @@ h1 {
   line-height: 1.1;
 }
 
-button,
-label {
+#logButton {
+  margin: 50px;
+}
+
+.button {
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
@@ -45,24 +49,35 @@ label {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+
 button:hover {
   border-color: #646cff;
 }
-button:focus,
-label:focus button:focus-visible {
+
+.button:focus,
+.button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
-label{
+
+label {
+  cursor: pointer;
+  font-weight: 500;
+}
+
+#file-picker {
   padding: 0.6em 0.6em;
 }
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
     background-color: #ffffff;
   }
+
   a:hover {
     color: #747bff;
   }
+
   button {
     background-color: #f9f9f9;
   }
@@ -74,16 +89,38 @@ label{
   padding: 2rem;
   text-align: center;
 }
+
 #inputs {
   display: flex;
-  margin: 50px;
   align-items: center;
 }
 
-span {
+.span {
   font-family: "Brush Script MT", cursive;
-  font-size: 40px;
+  font-size: 4.5em;
 }
+
+#toggle {
+  position: relative;
+  display: flex;
+  margin: 5em 0;
+  justify-content: center;
+
+  align-items: center;
+  gap: 0;
+}
+
+#label {
+  /* margin: 2em; */
+  position: absolute;
+  font-family: "Brush Script MT", cursive;
+  margin: 0 -1.5em;
+  font-size: 2em;
+  position: relative;
+  /* width: 3em; */
+  /* height: 1.5em; */
+}
+
 input {
   width: 40px;
   padding: 10px;
@@ -92,6 +129,45 @@ input {
   border-radius: 4px;
 }
 
-#icon {
+#icon,
+#notification-switch {
+  width: 0;
+  height: 0;
   display: none;
+}
+
+.switch {
+  margin: 0 4em;
+  font-size: 1.3em;
+  position: relative;
+  display: block;
+  width: 3em;
+  height: 1.5em;
+  background-color: #ccc;
+  border-radius: 1.5em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  /* margin-left: 0.5em;  */
+  /* border: solid 2px; */
+}
+
+.switch::after {
+  content: "";
+  position: absolute;
+  width: 1.2em;
+  height: 1.2em;
+  background-color: white;
+  border-radius: 50%;
+  top: 50%;
+  left: 0.15em;
+  transform: translateY(-50%);
+  transition: transform 0.3s ease;
+}
+
+#notification-switch:checked+.switch {
+  background-color: #28a745;
+}
+
+#notification-switch:checked+.switch::after {
+  transform: translate(120%, -50%);
 }
