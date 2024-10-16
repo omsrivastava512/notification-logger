@@ -7,25 +7,56 @@
 	<link rel="stylesheet" href="index.css">
 </head>
 <body>	
-	<form id="app">
-		<div id="inputs">
-			<span>console.log(&nbsp;</span><input type="text" id="body" placeholder="body" required><span>, &nbsp;</span>
-			<input type="text" id="title" placeholder="title"><span>, &nbsp; </span>
-			<input type="text" id="icon" placeholder="icon"><span>&nbsp;)</span><br><br>
+	<form id="app" >
+		<div id="toggle">
+
+			<div id="label">Console</div>
+    <input type="checkbox" id="notification-switch">
+    <label class="switch" for="notification-switch"></label>
+			</label>
+			<div id="label">Notifications</div>
 		</div>
-        <button id="logButton">Log Inputs</button>
+
+			<div id="inputs">
+			<span class="span">console.log(&nbsp;</span><input type="text" id="body" placeholder="body" required><span class="span">, &nbsp;</span>
+			<input type="text" id="title" placeholder="title"><span class="span">, &nbsp; </span>
+			<input type="file" id="icon" placeholder="icon" accept="image/*">
+			<label for="icon" class="button" id="file-picker">
+				📎 Select icon
+			</label ><span class="span">&nbsp;)</span><br><br>
+		</div>
+        <button class="button" id="logButton">Log Inputs</button>
     </form>
+
+
 
 	
 	<script src="notification-logger.js"></script>
 	<script>
-		document.getElementById('logButton').addEventListener('click', function(e) {
+
+		
+
+	document.getElementById('logButton').addEventListener('click', function(e) {
 			e.preventDefault();
+
             const body = document.getElementById('body').value;
             const title = document.getElementById('title').value;
-            const icon = document.getElementById('icon').value;
+            const icon = document.getElementById('icon').files[0];
+			//  
             console.log(body,title,icon);
         });
+
+		const toggleSwitch = document.getElementById('notification-switch');
+
+		toggleSwitch.addEventListener('change', function () {
+			if (this.checked) {
+				logger.init();
+			} else {
+				logger.destroy()
+			}
+		});
+
+
 		logger.init();
 		var a = 2;
 		var b = "I would like to log this";
