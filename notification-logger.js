@@ -7,10 +7,28 @@ sadIcon = "unhappy.png";
 
 function log(body, title, icon) {
   // send browser notifications only if page is hidden
+  let time = Date().split(" GMT")[0].split(" ");
+
+  if(icon instanceof File && icon?.type.startsWith('image/')){
+    const reader = new FileReader();
+    reader.onloadend = function(e) {
+      const imageUrl = e.target.result; 
+      icon = imageUrl;
+      // console.warn('loaded')
+      
+      if (document.hidden) {
+        sendNotification(body, title, icon);
+      }
+      sendToast(body, title, icon, time);
+    };
+    reader.readAsDataURL(icon);
+  }
+  else{
   if (document.hidden) {
     sendNotification(body, title, icon);
   }
-  sendToast(body, title, icon);
+  sendToast(body, title, icon, time);
+  }
 }
 
 function err(body, title) {
@@ -67,7 +85,7 @@ function sendNotification(body, title, icon) {
     });
   }
 }
-
+/** Toasts */
 (function createToast() {
   let toastContainter = document.createElement("div");
   toastContainter.classList.add("toast-container");
@@ -75,25 +93,30 @@ function sendNotification(body, title, icon) {
   document.querySelector("body").appendChild(toastContainter);
 })();
 
-function sendToast(body, title, icon) {
+function sendToast(body, title, icon,time) {
+
+  console.warn(typeof icon)
+  
+  
   let toastContainter = document.querySelector(".toast-container");
   // if number of notification >=5 other notifications go on hold until older notifcations closed
   if (toastContainter.children.length >= 5) {
     setTimeout(() => {
-      sendToast(body, title, icon);
+      sendToast(body, title, icon,time);
     }, 3000);
     return;
   }
 
-  let time = Date().split(" GMT")[0].split(" ");
   time = time[time.length - 1];
   icon = icon || logger.happyIcon;
   title = title || "Notification";
+  
+  // _console.log(body, title, icon?.name || icon)
 
   // image containg icon
   let iconhHolder = document.createElement("img");
   iconhHolder.classList.add("icon");
-  iconhHolder.setAttribute("alt", icon.split(".")[0]);
+  iconhHolder.setAttribute("alt", icon.startsWith('data:')?'uploaded image':icon?.split(/[. ]/)[0]);
   iconhHolder.setAttribute("src", icon);
   generateStyle(iconhHolder);
 
@@ -142,9 +165,10 @@ function sendToast(body, title, icon) {
   toast.appendChild(erase);
 
   toastContainter.appendChild(toast);
+  if(typeof icon === Object) toast.remove();
 }
 
-// adding styling through the style object
+/** adding styling through the style object */
 function elementStyler(element, styleObject) {
   for (let key in styleObject) {
     if (Object.prototype.hasOwnProperty.call(styleObject, key)) {
