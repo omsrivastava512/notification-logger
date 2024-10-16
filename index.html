@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Notification Logger</title>
+	<link rel="stylesheet" href="index.css">
+</head>
+<body>	
+	<form id="app">
+		<div id="inputs">
+			<span>console.log(&nbsp;</span><input type="text" id="body" placeholder="body" required><span>, &nbsp;</span>
+			<input type="text" id="title" placeholder="title"><span>, &nbsp; </span>
+			<input type="text" id="icon" placeholder="icon"><span>&nbsp;)</span><br><br>
+		</div>
+        <button id="logButton">Log Inputs</button>
+    </form>
+
+	
+	<script src="notification-logger.js"></script>
+	<script>
+		document.getElementById('logButton').addEventListener('click', function(e) {
+			e.preventDefault();
+            const body = document.getElementById('body').value;
+            const title = document.getElementById('title').value;
+            const icon = document.getElementById('icon').value;
+            console.log(`[${body}, ${title}, ${icon}]`);
+        });
+		logger.init();
+		var a = 2;
+		var b = "I would like to log this";
+
+		/*
+			Logs the variable b as Desktop Notification
+		*/
+		logger.log(b);
+
+		/*
+			Logs the variable a as Desktop Notification along with a title
+		*/
+		console.log(a, "title");
+
+		/*
+			Reverts console.log to original functionality.
+		*/
+		logger.destroy();
+
+		/*
+			Logs the variable simply in the console.
+		*/
+		console.log(a, "title");
+
+	</script>
+</body>
+</html>
